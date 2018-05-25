@@ -204,12 +204,12 @@ exports.randomCheck = (req, res, next) => {
     
     const answer = req.query.answer || '';
     const result = answer.toLowerCase().trim() === req.quiz.answer.toLowerCase().trim();
-    let score = req.session.randomPlay.length;
 
     if (result) {
 
         req.session.randomPlay.push(req.quiz.id);
-        score;
+        let score = req.session.randomPlay.length;
+
        
         models.quiz.count()
 
@@ -228,7 +228,8 @@ exports.randomCheck = (req, res, next) => {
 
     } else {
 
-        score;
+        let score = req.session.randomPlay.length;
+
         delete req.session.randomPlay;
         
         res.render('quizzes/random_result', {answer, result, score});
