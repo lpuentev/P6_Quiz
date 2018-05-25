@@ -226,10 +226,10 @@ exports.randomCheck = (req, res, next) => {
                 if (score > count){
                     
                     delete req.session.randomPlay;
-                    res.render('quizzes/random_result', {answer, result, score});
+                    res.render('quizzes/random_result', {result, score, answer});
 
                 } else {
-                    res.render('quizzes/random_result', {answer, result, score});
+                    res.render('quizzes/random_result', {result, score, answer});
                 }
             });
 
@@ -240,7 +240,7 @@ exports.randomCheck = (req, res, next) => {
 
         delete req.session.randomPlay;
         
-        res.render('quizzes/random_result', {answer, result, score});
+        res.render('quizzes/random_result', {result, score, answer});
     
     }
 
