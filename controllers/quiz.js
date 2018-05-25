@@ -174,9 +174,7 @@ exports.randomPlay = (req, res, next) => {
                     let score = req.session.randomPlay.length;
                     delete req.session.randomPlay;
                     
-                    res.render('quizzes/random_nomore', {
-                        score
-                    });
+                    res.render('quizzes/random_nomore', {score});
                 }
 
                 return models.quiz.findAll({
@@ -193,10 +191,7 @@ exports.randomPlay = (req, res, next) => {
     .then(quiz => {
         console.log("QUIZ" + quiz);
         let score = req.session.randomPlay.length;
-        res.render('quizzes/random_play', {
-            quiz,
-            score
-        });
+        res.render('quizzes/random_play', {quiz, score});
     });
 
     
@@ -220,24 +215,13 @@ exports.randomCheck = (req, res, next) => {
 
             .then( count => {
 
-                if (score <= count){
+                if (score > count){
                     
-                    res.render('quizzes/random_result', {
-                        result, 
-                        score, 
-                        answer
-                    
-                    });
+                    delete req.session.randomPlay;
+                    res.render('quizzes/random_result', {answer, result, score});
 
                 } else {
-
-                    delete req.session.randomPlay;
-                    res.render('quizzes/random_result', {
-                        result,
-                        score,
-                        answer
-                    
-                    });
+                    res.render('quizzes/random_result', {answer, result, score});
                 }
             });
 
@@ -247,11 +231,7 @@ exports.randomCheck = (req, res, next) => {
         score;
         delete req.session.randomPlay;
         
-        res.render('quizzes/random_result', {
-            result, 
-            score, 
-            answer
-        });
+        res.render('quizzes/random_result', {answer, result, score});
     
     }
 
