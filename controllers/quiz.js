@@ -167,6 +167,7 @@ exports.randomPlay = (req, res, next) => {
 
         const whereOpt = {"id": {[Sequelize.Op.notIn]:req.session.randomPlay}};
         return models.quiz.count({where: whereOpt})
+            
             .then(count => {
 
                 if (count === 0){
@@ -183,8 +184,15 @@ exports.randomPlay = (req, res, next) => {
                     limit: 1
                 })
 
-                .then(quizzes => quizzes[0]);
+                .then(quizzes => {
+                    return quizzes[0];
+                });
                 
+            })
+
+            .catch(error => {
+                req.flash('error', 'Error deleting the Quiz: ' + error.message);
+                next(error);
             });
     })
 
